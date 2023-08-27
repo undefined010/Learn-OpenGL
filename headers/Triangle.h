@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-class Shader
+class Triangle
 {
     private:
         // shaders source
@@ -22,8 +22,8 @@ class Shader
         GLuint fragmentShader;      
 
     public:
-        Shader();
-        virtual ~Shader();
+        Triangle();
+        virtual ~Triangle();
 
     public:
         void initVertexArrayObject();

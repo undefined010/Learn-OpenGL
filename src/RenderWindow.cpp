@@ -1,5 +1,7 @@
 #include "RenderWindow.h"
 
+#include <cmath>
+
 using namespace beta;
 
 
@@ -112,9 +114,21 @@ void RenderWindow::draw()
     glClearColor(0.1 , 0.3 , 0.4 , 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glBindVertexArray(this->VAO);
     glBindBuffer(GL_ARRAY_BUFFER , this->VBO);
+
+    double time = glfwGetTime();
+
+    double greenValue   = (sin(time) / 2.0f) + 0.5f;
+    double redValue     = (cos(time) / 2.0f) + 0.4f;
+    double blueValue    = (sin(time) / 1.5f) + 0.3f;
+
+
+    int vertexColorLocation = glGetUniformLocation(this->programObject , "mycolor");
+    glUniform4f(vertexColorLocation , redValue , greenValue , blueValue , 1.0f);
+
     glUseProgram(this->programObject);
+    glBindVertexArray(this->VAO);
+
     glDrawArrays(GL_TRIANGLES , 0 , 3);
 
     glfwSwapBuffers(this->window);

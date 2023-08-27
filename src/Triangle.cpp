@@ -1,38 +1,38 @@
-#include "Shaders.h"
+#include "Triangle.h"
 #include <cstdio>
 
-Shader::Shader()
+Triangle::Triangle()
 {
     printf("created\n");
 }
 
-Shader::~Shader()
+Triangle::~Triangle()
 {
     glDeleteShader(this->vertexShader);
     glDeleteShader(this->fragmentShader);
     printf("destoried\n");
 }
 
-void Shader::setVertexShaderSource(const std::string &shaderSource)
+void Triangle::setVertexShaderSource(const std::string &shaderSource)
 {
     this->vertexShaderSource = shaderSource;
     printf("set vertex shader\n");
 }
 
-void Shader::setFragmentShaderSource(const std::string &shaderSource)
+void Triangle::setFragmentShaderSource(const std::string &shaderSource)
 {
     this->fragmentShaderSource = shaderSource;
     printf("set fragment shader\n");
 }
 
-void Shader::initVertexArrayObject() 
+void Triangle::initVertexArrayObject() 
 {
     glGenVertexArrays(1 , &this->VAO);
     glBindVertexArray(this->VAO);
     printf("init vao\n");
 }
 
-void Shader::initVertexBufferObject(const std::vector<GLfloat> &vertexPos)
+void Triangle::initVertexBufferObject(const std::vector<GLfloat> &vertexPos)
 {
     glGenBuffers(1, &this->VBO);
     glBindBuffer(GL_ARRAY_BUFFER , this->VBO);
@@ -40,7 +40,7 @@ void Shader::initVertexBufferObject(const std::vector<GLfloat> &vertexPos)
     printf("%lu\n", vertexPos.size());
 }
 
-void Shader::initVertexAttribArray()
+void Triangle::initVertexAttribArray()
 {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0 , 3 , GL_FLOAT , GL_FALSE , 0 ,(void*)0);
@@ -48,7 +48,7 @@ void Shader::initVertexAttribArray()
     glDisableVertexAttribArray(0);
 }
 
-void Shader::initShaders()
+void Triangle::initShaders()
 {
     if (this->vertexShaderSource.length() == 0 || this->fragmentShaderSource.length() == 0) {
         fprintf(stderr,"one or all of the shaders are empty\n");
@@ -77,22 +77,22 @@ void Shader::initShaders()
 
 }
 
-GLuint Shader::getProgramObject()
+GLuint Triangle::getProgramObject()
 {
     return (this->programObject);
 }
 
-GLuint Shader::getVAO() 
+GLuint Triangle::getVAO() 
 {
     return (this->VAO);
 }
 
-GLuint Shader::getVBO()
+GLuint Triangle::getVBO()
 {
     return (this->VBO);
 }
 
-std::string Shader::getVertexShaderSource()
+std::string Triangle::getVertexShaderSource()
 {
     return this->vertexShaderSource;
 }

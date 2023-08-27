@@ -1,5 +1,5 @@
 #include "RenderWindow.h"
-#include "Shaders.h"
+#include "Triangle.h"
 
 using namespace beta;
 
@@ -14,9 +14,10 @@ const std::string vertexShaderSource   =
 const std::string fragmentShaderSource = 
     "#version 410 core\n"
     "out vec4 color;\n"
+    "uniform vec4 mycolor;\n"
     "void main()\n"
     "{\n"
-    "   color = vec4(0.2f , 0.1f , 0.5f , 1.0f);\n"
+    "   color = vec4(mycolor.x , mycolor.y , mycolor.x , mycolor.w);\n"
     "}\n"
 ;
 
@@ -24,7 +25,7 @@ const std::string fragmentShaderSource =
 int main() {
     
     RenderWindow *window = new RenderWindow(800 , 600 ,"OpenGL");
-    Shader *shader = new Shader();
+    Triangle *triangle = new Triangle();
 
     const std::vector<GLfloat> v = {
       -0.5f , 0.0f , 0.0f,
@@ -36,25 +37,24 @@ int main() {
     // important note :- 
     // in oreder to work you must follow this order
     // 
-    shader->setVertexShaderSource(vertexShaderSource);
-    shader->setFragmentShaderSource(fragmentShaderSource);
+    triangle->setVertexShaderSource(vertexShaderSource);
+    triangle->setFragmentShaderSource(fragmentShaderSource);
 
     // setting shader
-    shader->initVertexArrayObject();
-    shader->initVertexBufferObject(v);
-    shader->initVertexAttribArray();
+    triangle->initVertexArrayObject();
+    triangle->initVertexBufferObject(v);
+    triangle->initVertexAttribArray();
 
-    shader->initShaders();
+    triangle->initShaders();
 
-    window->setProgram(shader->getProgramObject());
-    window->setVAO(shader->getVAO());
-    window->setVBO(shader->getVBO());
-
+    window->setProgram(triangle->getProgramObject());
+    window->setVAO(triangle->getVAO());
+    window->setVBO(triangle->getVBO());
 
     window->run();
 
     delete window;
-    delete shader;
+    delete triangle;
 
     return 0;
 }
